@@ -127,5 +127,9 @@ public class OpenInterestChecker {
         stopped = true;
     }
 
+    public void init() {
+        openInterestDao.init();
+    }
+
     //calculate the diff. If diff is more than M limit - notify in console
 }

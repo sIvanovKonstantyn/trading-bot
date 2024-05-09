@@ -11,7 +11,7 @@ public class Application {
     private static OpenInterestChecker checker = new OpenInterestChecker();
 
     public static void main(String[] args) throws IOException {
-
+        checker.init();
         runBot();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

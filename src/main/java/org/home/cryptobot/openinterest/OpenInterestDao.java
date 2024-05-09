@@ -21,6 +21,26 @@ public class OpenInterestDao {
         }
     }
 
+    public void init() {
+        try (var conn = DriverManager.getConnection(url, username, password)) {
+            var sql = """
+            CREATE TABLE IF NOT EXISTS open_interests
+            ("timestamp" timestamp without time zone NOT NULL,
+            pair character varying NOT NULL,
+            open_interest double precision NOT NULL,
+            CONSTRAINT open_interest_uc UNIQUE ("timestamp", pair, open_interest)
+             )
+             ;
+            """;
+            try (var statement = conn.prepareStatement(sql)) {
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private synchronized void saveQueue() {
         try (var conn = DriverManager.getConnection(url, username, password)) {
             var sql = "INSERT INTO open_interests (timestamp, pair, open_interest) VALUES (?, ?, ?) ON CONFLICT (timestamp, pair, open_interest) DO NOTHING;";
