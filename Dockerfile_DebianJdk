@@ -1,0 +1,7 @@
+# Debian slim + 21jdk
+FROM openjdk:21-jdk-slim
+
+# Continue with your application deployment
+RUN mkdir /opt/app
+COPY /target/java-trading-bot-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/app
+CMD ["java", "-XX:+UseZGC", "-XX:+UseCompressedOops", "-Dcom.sun.management.jmxremote.rmi.port=7012", "-Dcom.sun.management.jmxremote.port=7012", "-Dcom.sun.management.jmxremote.authenticate=false", "-Dcom.sun.management.jmxremote.ssl=false", "-Djava.rmi.server.hostname=127.0.0.1", "-jar", "/opt/app/java-trading-bot-1.0-SNAPSHOT-jar-with-dependencies.jar"]
