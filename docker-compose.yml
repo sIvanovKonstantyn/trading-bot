@@ -1,0 +1,30 @@
+#
+version: "3.7"
+services:
+
+# postgres:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    cpus: 4
+    cpuset: "2-5"
+    restart: always
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c max_connections=200
+    environment:
+      POSTGRES_PASSWORD: postgres
+  service1:
+    image: trading-bot
+    container_name: trading-bot
+    ports:
+      - "8080:8080"
+      - "7012:7012"
+    cpus: 2
+    cpuset: "0,1"
+    depends_on:
+    - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
