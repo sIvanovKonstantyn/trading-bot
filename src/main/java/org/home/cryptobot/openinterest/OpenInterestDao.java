@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class OpenInterestDao {
     // Database connection properties
-    private final String url = "jdbc:postgresql://localhost:5432/postgres";
+    private final String url = "jdbc:postgresql://db:5432/postgres";
     private final String username = "postgres";
     private final String password = "postgres";
 
